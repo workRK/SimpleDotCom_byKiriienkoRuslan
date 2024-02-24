@@ -1,5 +1,8 @@
 package org.kiriienko;
 
+import org.kiriienko.game.DotCom;
+import org.kiriienko.game.GameHelper;
+
 /**
  * Hello world!
  *
@@ -8,6 +11,26 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
-    }
+        int numOfGuesses = 0;
+        GameHelper helper = new GameHelper();
+
+        DotCom theDotCom = new DotCom();
+
+        int randomNum = (int) (Math.random() * 5);
+
+        int[] locations = {randomNum, randomNum + 1, randomNum + 2};
+        theDotCom.setLocationCells(locations);
+        boolean isAlive = true;
+
+        while (isAlive) {
+            String guess = helper.getUserInput("enter a number");
+            String result = theDotCom.checkYourself(guess);
+            numOfGuesses++;
+            if (result.equals("kill")) {
+                isAlive = false;
+
+                System.out.println("Your took " + numOfGuesses + " guesses");
+            } // close if
+        } // close while
+    } // close main
 }
