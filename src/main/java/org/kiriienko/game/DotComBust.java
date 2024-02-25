@@ -41,12 +41,7 @@ public class DotComBust {
             dotComToSet.setLocationCells(newLocation);
         }
 
-        oceanGrid = new char[7][7];
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                oceanGrid[i][j] = ' ';
-            }
-        }
+        initializeOceanGrid();
     }
 
     public void startPlaying() {
@@ -60,23 +55,11 @@ public class DotComBust {
     }
 
     public void checkUserGuess(String userGuess) {
-
         numOfGuesses++;
 
         String result = "miss";
+        oceanGrid[Integer.parseInt(userGuess.substring(1))]["abcdwfg".indexOf(userGuess.charAt(0))] = 'M';
 
-        for(int x = 0; x < dotComsList.size(); x++) {
-            result = dotComsList.get(x).checkYourself(userGuess);
-
-            if(result.equals("hit")) {
-                break;
-            }
-
-            if(result.equals("kill")) {
-                dotComsList.remove(x);
-                break;
-            }
-        }
         for (int x = 0; x < dotComsList.size(); x++) {
             result = dotComsList.get(x).checkYourself(userGuess);
 
@@ -90,8 +73,6 @@ public class DotComBust {
                 dotComsList.remove(x);
                 break;
             }
-
-            oceanGrid[Integer.parseInt(userGuess.substring(1))]["abcdwfg".indexOf(userGuess.charAt(0))] = 'M';
         }
 
         printOceanGrid();
@@ -118,6 +99,15 @@ public class DotComBust {
                 System.out.print(oceanGrid[i][j] + " ");
             }
             System.out.println();
+        }
+    }
+
+    private void initializeOceanGrid() {
+        oceanGrid = new char[7][7];
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                oceanGrid[i][j] = ' ';
+            }
         }
     }
 }
